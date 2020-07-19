@@ -5,7 +5,7 @@ const path = require('path');
 
 const { recursiveFindFiles, execRegexOnAll } = require('./helpers.js');
 
-const dependencyTree = {}
+const dependencyTree = [];
 
 for(const jsFile of recursiveFindFiles(path.join(__dirname, 'example'), '.js')) {
   const { matches: allRequires } = execRegexOnAll(
@@ -14,9 +14,16 @@ for(const jsFile of recursiveFindFiles(path.join(__dirname, 'example'), '.js')) 
   );
 
   const currentPath = path.relative(process.cwd(), jsFile)
-  dependencyTree[currentPath] = allRequires.map(match => 
-    path.join(path.dirname(currentPath), match[1])
-  );
+  const node = allRequires.map(match => 
+    ({
+      parent: currentPath,
+      children: path.join(path.dirname(currentPath), match[1])
+    })
+  )
+
+  if (node.length > 0) {
+    dependencyTree.push(...node);
+  }
 }
 
 console.log(dependencyTree);
