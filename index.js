@@ -16,9 +16,6 @@ let moduleRegex;
  * @param {String} node - Path of the root file
  */
 function findChildrens(node) {
-  // if (!fs.existsSync(path.join(process.cwd(), node))) {
-  //   throw new Error('File not found... make sure it is relative to the path you\'re executing command from\n\n')
-  // }
   const jsPath = path.join(process.cwd(), node);
   let jsText;
   if (fs.existsSync(jsPath)) {
