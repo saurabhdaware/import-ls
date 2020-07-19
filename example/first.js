@@ -1,4 +1,4 @@
-const second = require('./second.js');
+const second = require('./second');
 const alsoSecond = require('./deep/also-second.js');
 
 console.log(second);

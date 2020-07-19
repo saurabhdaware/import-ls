@@ -12,11 +12,16 @@ const root = process.argv[2];
  * @param {String} node - Path of the root file
  */
 function findChildrens(node) {
-  if (!fs.existsSync(path.join(process.cwd(), node))) {
-    throw new Error('File not found... make sure it is relative to the path you\'re executing command from\n\n')
+  // if (!fs.existsSync(path.join(process.cwd(), node))) {
+  //   throw new Error('File not found... make sure it is relative to the path you\'re executing command from\n\n')
+  // }
+  const jsPath = path.join(process.cwd(), node);
+  let jsText;
+  if (fs.existsSync(jsPath)) {
+    jsText = fs.readFileSync(jsPath, 'utf-8');
+  } else if (fs.existsSync(jsPath + '.js')) {
+    jsText = fs.readFileSync(jsPath + '.js', 'utf-8')
   }
-
-  const jsText = fs.readFileSync(path.join(process.cwd(), node), 'utf-8');
 
   const requireRegex = flagValue('--module-type') === 'require' 
     ? /require\(["'"](.*?)["'"]\)/g 
@@ -27,8 +32,8 @@ function findChildrens(node) {
 
   let nodes = [];
   for (const children of childrens) {
-    if (!fs.existsSync(path.join(process.cwd(), children))) {
-      nodes.push({parent: children + ' (module)', childrens: []})
+    if (!fs.existsSync(path.join(process.cwd(), children)) && !fs.existsSync(path.join(process.cwd(), children + '.js'))) {
+      nodes.push({parent: path.basename(children) + ' (module)', childrens: []})
       continue;
     }
     nodes.push({parent: children, childrens: findChildrens(children)});

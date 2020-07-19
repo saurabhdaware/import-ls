@@ -1,6 +1,6 @@
 {
   "name": "build-import-map",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Build import tree of a JavaScript project",
   "main": "index.js",
   "bin": {
