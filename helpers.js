@@ -1,43 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
-/**
- *
- * @param {String} base directory to search in
- * @param {String} ext Extension you want to search for (e.g. '.abell')
- * @param {String[]} inputFiles Array of directories
- * @param {String[]} inputResult Holds the old input result
- * @return {String[]} Array of filepaths that end with given extension
- */
-function recursiveFindFiles(
-  base,
-  ext,
-  inputFiles = undefined,
-  inputResult = undefined
-) {
-  const files = inputFiles || fs.readdirSync(base);
-  let result = inputResult || [];
-
-  for (const file of files) {
-    const newbase = path.join(base, file);
-    if (fs.statSync(newbase).isDirectory()) {
-      result = recursiveFindFiles(
-        newbase,
-        ext,
-        fs.readdirSync(newbase),
-        result
-      );
-    } else {
-      if (file.endsWith(ext)) {
-        result.push(newbase);
-      }
-    }
-  }
-
-  return result;
-}
-
-
 /**
  * Captures groups from regex and executes RegEx.exec() function on all.
  *
@@ -66,7 +26,19 @@ const execRegexOnAll = (regex, template) => {
   return { matches: allMatches, input };
 };
 
+/**
+ * Returns value of the flag in CLI
+ * @param {String} flag flag to retrive value (e.g --type)
+ */
+function flagValue(flag) {
+  if (!process.argv.includes(flag)) {
+    return undefined;
+  }
+
+  return process.argv[process.argv.indexOf(flag) + 1];
+}
+
 module.exports = {
-  recursiveFindFiles,
-  execRegexOnAll
+  execRegexOnAll,
+  flagValue
 }

@@ -3,27 +3,48 @@
 const fs = require('fs');
 const path = require('path');
 
-const { recursiveFindFiles, execRegexOnAll } = require('./helpers.js');
+const { execRegexOnAll, flagValue } = require('./helpers.js');
 
-const dependencyTree = [];
+const root = process.argv[2];
 
-for(const jsFile of recursiveFindFiles(path.join(__dirname, 'example'), '.js')) {
-  const { matches: allRequires } = execRegexOnAll(
-    /require\(['"](.*?)['"]\)/g, 
-    fs.readFileSync(jsFile, 'utf-8')
-  );
+/**
+ * Recursive function that returns the complete tree starting from given node
+ * @param {String} node - Path of the root file
+ */
+function findChildrens(node) {
+  const jsText = fs.readFileSync(path.join(process.cwd(), node), 'utf-8');
 
-  const currentPath = path.relative(process.cwd(), jsFile)
-  const node = allRequires.map(match => 
-    ({
-      parent: currentPath,
-      children: path.join(path.dirname(currentPath), match[1])
-    })
-  )
+  const requireRegex = flagValue('--module-type') === 'require' 
+    ? /require\(["'"](.*?)["'"]\)/g 
+    : /import \w*? from ["'](.*?)["']/g
 
-  if (node.length > 0) {
-    dependencyTree.push(...node);
+  const { matches } =  execRegexOnAll(requireRegex, jsText);
+  const childrens = matches.map(match => path.join(path.dirname(node), match[1]))
+  let nodes = [];
+  for (const children of childrens) {
+    nodes.push({parent: children, childrens: findChildrens(children)});
+  }
+
+  return nodes;
+}
+
+/** Prints tree with proper formating */
+function printTree(tree, tab = '') {
+  if (!tree) return;
+  console.log('|-' + tab + ' ' + tree.parent);
+  for (const childTree of tree.childrens) {
+    printTree(childTree, tab + '--');
   }
 }
 
-console.log(dependencyTree);
+/**
+ * Main
+ */
+const outputTree = {
+  parent: root,
+  childrens: findChildrens(root)
+}
+
+console.log("\nHere's your file-import tree 🌻\n");
+printTree(outputTree);
+console.log();
