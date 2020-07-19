@@ -12,6 +12,10 @@ const root = process.argv[2];
  * @param {String} node - Path of the root file
  */
 function findChildrens(node) {
+  if (!fs.existsSync(path.join(process.cwd(), node))) {
+    throw new Error('File not found... make sure it is relative to the path you\'re executing command from\n\n')
+  }
+
   const jsText = fs.readFileSync(path.join(process.cwd(), node), 'utf-8');
 
   const requireRegex = flagValue('--module-type') === 'require' 
@@ -20,8 +24,13 @@ function findChildrens(node) {
 
   const { matches } =  execRegexOnAll(requireRegex, jsText);
   const childrens = matches.map(match => path.join(path.dirname(node), match[1]))
+
   let nodes = [];
   for (const children of childrens) {
+    if (!fs.existsSync(path.join(process.cwd(), children))) {
+      nodes.push({parent: children + ' (module)', childrens: []})
+      continue;
+    }
     nodes.push({parent: children, childrens: findChildrens(children)});
   }
 
