@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "Build import tree of a JavaScript project",
   "main": "index.js",
-  "directories": {
-    "example": "example"
+  "bin": {
+    "build-import-map": "./index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/saurabhdaware/build-import-map/issues"
   },
