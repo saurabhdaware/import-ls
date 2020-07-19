@@ -13,7 +13,10 @@ for(const jsFile of recursiveFindFiles(path.join(__dirname, 'example'), '.js')) 
     fs.readFileSync(jsFile, 'utf-8')
   );
 
-  dependencyTree[path.relative(process.cwd(), jsFile)] = allRequires.map(match => match[1]);
+  const currentPath = path.relative(process.cwd(), jsFile)
+  dependencyTree[currentPath] = allRequires.map(match => 
+    path.join(path.dirname(currentPath), match[1])
+  );
 }
 
 console.log(dependencyTree);
