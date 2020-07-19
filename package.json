@@ -1,23 +1,23 @@
 {
-  "name": "build-import-map",
+  "name": "import-ls",
   "version": "0.0.4",
   "description": "Build import tree of a JavaScript project",
   "main": "index.js",
   "bin": {
-    "build-import-map": "./index.js"
+    "import-ls": "./index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saurabhdaware/build-import-map.git"
+    "url": "git+https://github.com/saurabhdaware/import-ls.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saurabhdaware/build-import-map/issues"
+    "url": "https://github.com/saurabhdaware/import-ls/issues"
   },
-  "homepage": "https://github.com/saurabhdaware/build-import-map#readme"
+  "homepage": "https://github.com/saurabhdaware/import-ls#readme"
 }
