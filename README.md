@@ -15,7 +15,9 @@ The tool will try to figure out what modules system is used from the code, but i
 npx build-import-map <entry-file-path> --module-type <require|import>
 ```
 
-
+## Flags
+- `--module-type <'require' or 'import'>`: Sometimes the tool can't auto-detect the module-system. In that case, you can mention which module system is used in the project.
+- `--show-parent`: Adds `(Parent: <name-of-parent>.js)` in the tree.
 
 ## Contributing
 
