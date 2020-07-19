@@ -32,13 +32,20 @@ const execRegexOnAll = (regex, template) => {
  */
 function flagValue(flag) {
   if (!process.argv.includes(flag)) {
+    return null;
+  }
+
+  if (process.argv.indexOf(flag) === process.argv.length) {
     return undefined;
   }
 
   return process.argv[process.argv.indexOf(flag) + 1];
 }
 
+const grey = (message) => `\u001b[90m${message}\u001b[39m`;
+
 module.exports = {
   execRegexOnAll,
-  flagValue
+  flagValue,
+  grey
 }

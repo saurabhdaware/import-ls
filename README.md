@@ -5,10 +5,7 @@ WIP! Builds import tree of local files of a JavaScript project
 npx build-import-map index.js
 ```
 
-**In Node.js,** or projects where you use `require()` to import files, use `--module-type require` flag
-```sh
-npx build-import-map <entry-file>.js --module-type require
-```
+The tool will try to figure out what modules system is used from the code, but if it couldn't, you will have to use `--module-type require` or `--module-type import` flag to specify the import type.
 
 
 ## Usage

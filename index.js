@@ -3,9 +3,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const { execRegexOnAll, flagValue } = require('./helpers.js');
+const { execRegexOnAll, flagValue, grey } = require('./helpers.js');
 
 const root = process.argv[2];
+
+const requireREGEX = /require\(["'"](.*?)["'"]\)/g
+const es6importREGEX = / from ["'](.*?)["']/g
+let moduleRegex;
 
 /**
  * Recursive function that returns the complete tree starting from given node
@@ -23,31 +27,45 @@ function findChildrens(node) {
     jsText = fs.readFileSync(jsPath + '.js', 'utf-8')
   }
 
-  const requireRegex = flagValue('--module-type') === 'require' 
-    ? /require\(["'"](.*?)["'"]\)/g 
-    : /import \w*? from ["'](.*?)["']/g
+  if (node === root) {
+    // only need to figure out module system in the beginning
+    const doesRequireExistsInCode = jsText.match(requireREGEX);
+    const doesES6ImportExistsInCode = jsText.match(es6importREGEX);
+  
+    if (flagValue('--module-type') === 'require') {
+      moduleRegex = requireREGEX;
+    } else if (flagValue('--module-type') === 'import') {
+      moduleRegex = es6importREGEX;
+    } else if (doesRequireExistsInCode && !doesES6ImportExistsInCode) {
+      moduleRegex = requireREGEX;
+    } else if (doesES6ImportExistsInCode && !doesRequireExistsInCode) {
+      moduleRegex = es6importREGEX;
+    } else {
+      throw new Error('Could not figure out which module system is being used. Please use `--module-type require` or `--module-type import` flag to specify import type');
+    }
+  }
 
-  const { matches } =  execRegexOnAll(requireRegex, jsText);
+  const { matches } =  execRegexOnAll(moduleRegex, jsText);
   const childrens = matches.map(match => path.join(path.dirname(node), match[1]))
 
   let nodes = [];
   for (const children of childrens) {
     if (!fs.existsSync(path.join(process.cwd(), children)) && !fs.existsSync(path.join(process.cwd(), children + '.js'))) {
-      nodes.push({parent: path.basename(children) + ' (module)', childrens: []})
+      nodes.push({parent: node, value: path.basename(children) + ' (module)', childrens: []})
       continue;
     }
-    nodes.push({parent: children, childrens: findChildrens(children)});
+    nodes.push({parent: node, value: children, childrens: findChildrens(children)});
   }
 
   return nodes;
 }
 
 /** Prints tree with proper formating */
-function printTree(tree, tab = '') {
+function printTree(tree, tab = '', options = {}) {
   if (!tree) return;
-  console.log('|-' + tab + ' ' + tree.parent);
+  console.log(`|${tab} ${tree.value} ${options.showParent ? grey(`(Parent: ${tree.parent})`): ''}`)
   for (const childTree of tree.childrens) {
-    printTree(childTree, tab + '--');
+    printTree(childTree, tab + '--', options);
   }
 }
 
@@ -55,10 +73,11 @@ function printTree(tree, tab = '') {
  * Main
  */
 const outputTree = {
-  parent: root,
+  parent: '',
+  value: root,
   childrens: findChildrens(root)
 }
 
 console.log("\nHere's your file-import tree 🌻\n");
-printTree(outputTree);
+printTree(outputTree, '', { showParent: flagValue('--show-parent') === undefined });
 console.log();
