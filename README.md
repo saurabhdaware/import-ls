@@ -26,8 +26,12 @@ npx import-ls index.js
 
 
 ## Flags
-- `--module-type <'require' or 'import'>`: Sometimes the tool can't auto-detect the module-system. In that case, you can mention which module system is used in the project.
-- `--show-parent`: Adds `(Parent: <name-of-parent>.js)` in the tree.
+
+| Flags                                 | Description                 |
+|---------------------------------------|-----------------------------|
+| --module-type <'require' or 'import'> | Specify module type         |
+| --show-parent                         | Adds parent name to log     |
+| --include-modules                     | Includes modules in the log |
 
 ## Contributing
 

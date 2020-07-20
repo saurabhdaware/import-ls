@@ -39,7 +39,12 @@ function flagValue(flag) {
     return undefined;
   }
 
-  return process.argv[process.argv.indexOf(flag) + 1];
+  const item = process.argv[process.argv.indexOf(flag) + 1];
+  if (item && item.startsWith('--')) {
+    return undefined;
+  }
+
+  return item;
 }
 
 const grey = (message) => `\u001b[90m${message}\u001b[39m`;

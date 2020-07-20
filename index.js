@@ -48,7 +48,9 @@ function findChildrens(node) {
   let nodes = [];
   for (const children of childrens) {
     if (!fs.existsSync(path.join(process.cwd(), children)) && !fs.existsSync(path.join(process.cwd(), children + '.js'))) {
-      nodes.push({parent: node, value: path.basename(children) + ' (module)', childrens: []})
+      if (flagValue('--include-modules') === undefined) {
+        nodes.push({parent: node, value: path.basename(children) + ' (module)', childrens: []})
+      }
       continue;
     }
     nodes.push({parent: node, value: children, childrens: findChildrens(children)});
