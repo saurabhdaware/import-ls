@@ -1,11 +1,12 @@
 # import-ls
 
-<p align="left"><a href="https://npmjs.org/package/abell"><img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/saurabhdaware/import-ls?style=for-the-badge&labelColor=black&logo=npm&label=import-ls&color=darkred"></a> &nbsp;<a href="https://twitter.com/saurabhcodes"><img alt="Twitter profile badge of @saurabhcodes" src="https://img.shields.io/badge/follow-@saurabhcodes-1DA1F2?style=for-the-badge&logo=twitter&logoColor=1DA1F2&labelColor=black"/></a> </p>
+<p align="left"><a href="https://npmjs.org/package/import-ls"><img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/saurabhdaware/import-ls?style=for-the-badge&labelColor=black&logo=npm&label=import-ls&color=darkred"></a> &nbsp;<a href="https://twitter.com/saurabhcodes"><img alt="Twitter profile badge of @saurabhcodes" src="https://img.shields.io/badge/follow-@saurabhcodes-1DA1F2?style=for-the-badge&logo=twitter&logoColor=1DA1F2&labelColor=black"/></a> </p>
 
+<img width="600" alt="Cover image of import-ls that displays the tree it has built. The image shows npx import-ls render.js --show-parent command. Documentation for the same is given below" src="https://res.cloudinary.com/saurabhdaware/image/upload/v1595232013/npm/import-ls-cover.png">
 
-![Cover image of import-ls that displays the tree it has built. The image shows npx import-ls render.js --show-parent command. Documentation for the same is given below](https://res.cloudinary.com/saurabhdaware/image/upload/v1595221648/npm/import-ls-cover.png)
+<br/><br/>
 
-WIP! Builds import tree of local files of a JavaScript project
+WIP! Build import tree of local files in a JavaScript project
 
 ## Usage
 
@@ -44,6 +45,8 @@ npm link # use sudo if needed
 cd example 
 import-ls index.js --module-type require
 ```
+
+Reach out to saurabhdaware99@gmail.com for any help 
 
 --- 
 
