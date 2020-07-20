@@ -1,6 +1,6 @@
 {
   "name": "import-ls",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Build import tree of a JavaScript project",
   "main": "index.js",
   "bin": {
