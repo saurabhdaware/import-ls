@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: #006EB8;
+}
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0px;
+  color: #191919;
+  background-color: #fff;
+  font-size: 1rem;
+}
+
+.text-xxl {
+  font-size: 3rem;
+  font-weight: bold;
+  display: block;
+}
+
+nav#topnav {
+  padding: 0px 150px;
+  background-color: #151515;
+  display: flex;
+  width: 100%;
+}
+
+nav#topnav .brand-container {
+  flex: 1;
+  padding: 24px 20px;
+}
+
+nav#topnav #brand {
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+nav#topnav .right-items {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  align-items: stretch;
+}
+
+nav#topnav .nav-item {
+  padding: 30px 20px;
+  font-size: 0.9rem;
+  display: inline-block;
+  color: #ddd;
+  letter-spacing: 0.1rem;
+  transition: color .3s ease;
+}
+
+nav#topnav .nav-item:hover {
+  color: #fff;
+  transition: color .3s ease;
+}
+
+.header {
+  text-align: center;
+  padding: 100px;
+}
+
+.description {
+  padding: 0px 200px;
+}
+
+.view-github-link {
+  background-color: #111;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+main {
+  padding: 130px 200px;
+}
+
+/* markdown styles */
+h1 {font-size: 2.4rem;}
+h2 {font-size: 1.9rem;}
+h3 {font-size: 1.5rem;}
+
+pre > code {
+  border-radius: 5px;
+  padding: 20px !important;
+  line-height: 1.5rem;
+}
+
+blockquote{
+  background-color: #eee;
+  margin: 0px;
+  padding: 10px;
+  padding-left: 20px;
+  border-left: 3px solid #333;
+}
+
+code {
+  background-color: #eee;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: smaller;
+}
+
+ul, ol {
+  line-height: 1.7rem;
+}
+
+footer {
+  padding: 30px 200px;
+  text-align: right;
+  background-color: #eee;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 100px 10px;
+  }
+
+  .description {
+    padding: 0px 10px;
+  }
+
+  nav#topnav {
+    padding: 0px 10px;
+  }
+
+
+  nav#topnav .nav-item {
+    padding: 30px 13px;
+    font-size: 0.9rem;
+    letter-spacing: unset;
+  }
+
+  main {
+    padding: 50px 25px;
+  }
+
+  footer {
+    padding: 30px;
+  }
+}
